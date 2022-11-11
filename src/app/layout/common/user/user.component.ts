@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
-import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
+import { User } from '@fuse/models/user.types';
 
 @Component({
     selector       : 'user',
@@ -28,8 +27,7 @@ export class UserComponent implements OnInit, OnDestroy
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
-        private _userService: UserService
+        private _router: Router
     )
     {
     }
@@ -43,15 +41,13 @@ export class UserComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Subscribe to user changes
-        this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        this.user = {
+            id    : 'cfaad35d-07a3-4447-a6c3-d8c3d54fd5df',
+            name  : 'Brian Hughes',
+            email : 'hughes.brian@company.com',
+            avatar: 'assets/images/avatars/brian-hughes.jpg',
+            status: 'online'
+        };
     }
 
     /**
@@ -80,12 +76,6 @@ export class UserComponent implements OnInit, OnDestroy
         {
             return;
         }
-
-        // Update the user
-        this._userService.update({
-            ...this.user,
-            status
-        }).subscribe();
     }
 
     /**

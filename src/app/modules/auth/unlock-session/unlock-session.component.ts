@@ -3,7 +3,6 @@ import { UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angul
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/core/auth/auth.service';
-import { UserService } from 'app/core/user/user.service';
 import { FuseAlertType } from '@fuse/components/alert';
 
 @Component({
@@ -32,8 +31,7 @@ export class AuthUnlockSessionComponent implements OnInit
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router,
-        private _userService: UserService
+        private _router: Router
     )
     {
     }
@@ -48,10 +46,8 @@ export class AuthUnlockSessionComponent implements OnInit
     ngOnInit(): void
     {
         // Get the user's name
-        this._userService.user$.subscribe((user) => {
-            this.name = user.name;
-            this._email = user.email;
-        });
+        this.name = 'taimour ali';
+        this._email = 'taimour@epakcms.com';
 
         // Create the form
         this.unlockSessionForm = this._formBuilder.group({
